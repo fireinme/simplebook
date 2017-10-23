@@ -5,7 +5,7 @@
             {{csrf_field()}}
             <div class="form-group">
                 <label>标题</label>
-                <input name="title" type="text" class="form-control" placeholder="这里是标题">
+                <input name="title" type="text" class="form-control" placeholder="这里是标题" value="{{old()}}">
             </div>
             <div class="form-group">
                 <label>内容</label>

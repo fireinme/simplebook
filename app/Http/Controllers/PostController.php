@@ -16,7 +16,8 @@ class PostController extends Controller
     public function index()
     {
         //
-        return view('post.index');
+        $posts = Post::all()->orderBy('created_at', 'desc');
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -70,6 +71,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        return view('post.edit', compact('post'));
     }
 
     /**
