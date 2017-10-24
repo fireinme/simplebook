@@ -7,7 +7,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="csrf-token" content="MESUY3topeHgvFqsy9EcM916UWQq6khiGHM91wHy">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
 
     <title>laravel for blog</title>
@@ -60,8 +60,8 @@
                        aria-haspopup="true" aria-expanded="false">Kassandra Ankunding2 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/user/5">我的主页</a></li>
-                        <li><a href="/user/5/setting">个人设置</a></li>
-                        <li><a href="/logout">登出</a></li>
+                        <li><a href="#">个人设置</a></li>
+                        <li><a href="{{route('logout')}}">登出</a></li>
                     </ul>
                 </div>
             </li>

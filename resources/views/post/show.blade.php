@@ -3,18 +3,20 @@
     <div class="col-sm-8 blog-main">
         <div class="blog-post">
             <div style="display:inline-flex">
-                <h2 class="blog-post-title">你好你好</h2>
-                <a style="margin: auto"  href="/posts/62/edit">
+                <h2 class="blog-post-title">{{$post->title}}</h2>
+                <a style="margin: auto" href="{{route('posts.edit',$post)}}">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
-                <a style="margin: auto"  href="/posts/62/delete">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </a>
+                <a style="margin: auto" href="{{ route('posts.delete',$post),method_field('delete') }}"> <span
+                            class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a>
+
             </div>
 
-            <p class="blog-post-meta">May 14, 2017 by <a href="#">Kassandra Ankunding2</a></p>
+            <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}}<a href="#">Kassandra Ankunding2</a>
+            </p>
 
-            <p><p>你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好<img src="http://127.0.0.1:8000/storage/72c76b674ec8793fcfd6555ff371bfbd/nxC9ozLfkORmoY92q9lPsejXchVvdNO2cwHiR2Jf.jpeg" alt="63" style="max-width: 100%;">你好你好似懂非懂说</p><p><br></p></p>
+            {!!$post->content  !!}
+            <p><br></p>
             <div>
                 <a href="/posts/62/zan" type="button" class="btn btn-primary btn-lg">赞</a>
 
@@ -22,10 +24,8 @@
         </div>
 
         <div class="panel panel-default">
-            <!-- Default panel contents -->
             <div class="panel-heading">评论</div>
 
-            <!-- List group -->
             <ul class="list-group">
                 <li class="list-group-item">
                     <h5>2017-05-28 10:15:08 by Kassandra Ankunding2</h5>

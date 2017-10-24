@@ -16,7 +16,8 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::all()->orderBy('created_at', 'desc');
+        /*$posts = Post::orderBy('created_at', 'desc')->paginate(6);*/
+        $posts = Post::orderBy('created_at', 'desc')->paginate(6);
         return view('post.index', compact('posts'));
     }
 
@@ -44,10 +45,8 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required|min:20'
         ]);
-        Auth::attempt([
-            'title' => $request->title,
-            'content' => $request->input('content'),
-        ]);
+        Post::create(request(['title', 'content']));
+        return redirect('/posts');
     }
 
     /**
@@ -59,7 +58,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
-        return view('post.index', compact('post'));
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -84,6 +83,17 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required|min:20'
+        ]);
+        $post->update([
+                'title' => $request->title,
+                'content' => $request->input('content')
+            ]
+        );
+        return redirect()->route('posts.show', $post);
+
     }
 
     /**
@@ -92,8 +102,19 @@ class PostController extends Controller
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function delete(Post $post)
     {
         //
+        $post->delete();
+        return redirect('posts');
+    }
+
+    /*
+     * 图片上传方法
+     * */
+
+    public function imageUpload(Request $request)
+    {
+        dd($request->all());
     }
 }
