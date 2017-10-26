@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Comment;
+use App\Zan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,11 +15,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
         /*$posts = Post::orderBy('created_at', 'desc')->paginate(6);*/
-        $posts = Post::orderBy('created_at', 'desc')->paginate(6);
+        $posts = Post::orderBy('created_at', 'desc')->withCount('comments')->paginate(6);
         return view('post.index', compact('posts'));
     }
 
@@ -45,7 +52,14 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required|min:20'
         ]);
-        Post::create(request(['title', 'content']));
+        $user_id = Auth::id();
+        /*$param = array_merge(request(['title', 'content']), compact('user_id'));
+        Post::create($param);*/
+        $post = new Post();
+        $post->title = request('title');
+        $post->content = request('content');
+        $post->user_id = $user_id;
+        $post->save();
         return redirect('/posts');
     }
 
@@ -58,6 +72,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+        $post->load('comments');
         return view('post.show', compact('post'));
     }
 
@@ -70,6 +85,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        $this->authorize('update', $post);
         return view('post.edit', compact('post'));
     }
 
@@ -105,6 +121,7 @@ class PostController extends Controller
     public function delete(Post $post)
     {
         //
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect('posts');
     }
@@ -116,5 +133,36 @@ class PostController extends Controller
     public function imageUpload(Request $request)
     {
         dd($request->all());
+    }
+
+    public function comment()
+    {
+        $this->validate(\request(), [
+            'content' => 'required|min:3|max:100'
+        ]);
+
+        $user_id = Auth::id();
+        $post_id = request('post_id');
+        $content = request('content');
+
+        Comment::create(compact('user_id', 'post_id', 'content'));
+        return redirect()->back();
+    }
+
+    //点赞
+    public function zan(Post $post)
+    {
+        $user_id = Auth::id();
+        $post_id = $post->id;
+        Zan::create(compact('$user_id', '$post_id'));
+        return back();
+    }
+
+    public function unZan(Post $post)
+    {
+        $user_id = Auth::id();
+        $post_id = $post->id;
+        $zan = $post->zan(Auth::id());
+        $zan->delete();
     }
 }

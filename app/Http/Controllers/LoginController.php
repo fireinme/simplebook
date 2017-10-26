@@ -14,7 +14,7 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:3'
         ]);
-        $user_detail = \request(['email', 'password']);
+        $user_detail = request(['email', 'password']);
         if (Auth::attempt($user_detail, request('is_remember'))) {
             return redirect('posts');
         };

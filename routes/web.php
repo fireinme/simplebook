@@ -34,3 +34,8 @@ Route::post('user/{user}', 'UserController@settingStore');
 Route::resource('posts', 'PostController');
 Route::post('posts/image/upload', 'PostController@imageUpload');
 Route::get('posts/{post}/delete', 'PostController@delete')->name('posts.delete');
+
+//提交评论
+Route::post('posts/comment', 'PostController@comment');
+//点赞
+Route::get('posts/{post}/zan', 'PostController@zan')->name('zan');
