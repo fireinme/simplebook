@@ -39,3 +39,4 @@ Route::get('posts/{post}/delete', 'PostController@delete')->name('posts.delete')
 Route::post('posts/comment', 'PostController@comment');
 //点赞
 Route::get('posts/{post}/zan', 'PostController@zan')->name('zan');
+Route::get('posts/{post}/unzan', 'PostController@unZan')->name('unzan');

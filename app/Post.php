@@ -19,9 +19,13 @@ class Post extends Model
         return $this->hasMany('App\Comment');
     }
 
-    public function zan()
+    public function zan($user_id)
     {
-        return $this->hasMany('User\Zan');
+        return $this->hasOne('App\Zan')->where('user_id', $user_id);
     }
 
+    public function zans()
+    {
+        return $this->hasOne('App\Zan');
+    }
 }

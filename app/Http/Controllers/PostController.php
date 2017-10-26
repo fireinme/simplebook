@@ -154,15 +154,15 @@ class PostController extends Controller
     {
         $user_id = Auth::id();
         $post_id = $post->id;
-        Zan::create(compact('$user_id', '$post_id'));
+        Zan::create(compact('user_id', 'post_id'));
         return back();
     }
 
     public function unZan(Post $post)
     {
         $user_id = Auth::id();
-        $post_id = $post->id;
-        $zan = $post->zan(Auth::id());
+        $zan = $post->zan($user_id);
         $zan->delete();
+        return back();
     }
 }

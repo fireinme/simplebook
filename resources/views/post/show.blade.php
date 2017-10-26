@@ -24,8 +24,13 @@
             {!!$post->content  !!}
             <p><br></p>
             <div>
-                <a href="{{route('zan',\Illuminate\Support\Facades\Auth::user())}}" type="button"
-                   class="btn btn-primary btn-lg">赞</a>
+                @if($post->zan(\Illuminate\Support\Facades\Auth::id())->exists())
+                    <a href="{{route('unzan',$post)}}" type="button"
+                       class="btn btn-primary btn-lg">取消赞</a>
+                @else
+                    <a href="{{route('zan',$post)}}" type="button"
+                       class="btn btn-primary btn-lg">赞</a>
+                @endif
 
             </div>
         </div>
