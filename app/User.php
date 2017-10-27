@@ -32,4 +32,28 @@ class User extends Authenticatable
         return $this->hasMany('App\Post');
 
     }
+
+    public function fans()
+    {
+        return $this->belongsToMany('App\User', 'fans', 'star_id', 'id');
+    }
+
+    public function stars()
+    {
+        return $this->belongsToMany('App\User', 'fans', 'fan_id', 'id');
+    }
+
+    public function fan($fan_id)
+    {
+        return $this->belongsToMany('App\User', 'fans', 'star_id', 'id')
+            ->where('fan_id', $fan_id);
+
+    }
+
+    public function star($star_id)
+    {
+        return $this->belongsToMany('App\User', 'fans', 'fan_id', 'id')
+            ->where('star_id', $star_id);
+
+    }
 }

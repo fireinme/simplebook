@@ -3,6 +3,7 @@
     <div class="blog-header">
     </div>
     <div class="row">
+
         @yield('content')
         @include('layouts._side')
     </div><!-- /.row -->

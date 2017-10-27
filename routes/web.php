@@ -32,7 +32,6 @@ Route::get('user/me/setting', function () {
 Route::post('user/{user}', 'UserController@settingStore');
 
 Route::resource('posts', 'PostController');
-Route::post('posts/image/upload', 'PostController@imageUpload');
 Route::get('posts/{post}/delete', 'PostController@delete')->name('posts.delete');
 
 //提交评论
@@ -40,3 +39,7 @@ Route::post('posts/comment', 'PostController@comment');
 //点赞
 Route::get('posts/{post}/zan', 'PostController@zan')->name('zan');
 Route::get('posts/{post}/unzan', 'PostController@unZan')->name('unzan');
+//个人首页
+Route::get('user/{user}', 'UserController@index')->name('user.index');
+//关注
+Route::get('user/{user}/star', 'UserController@star')->name('user.star');

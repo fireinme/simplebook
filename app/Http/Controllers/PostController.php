@@ -24,7 +24,7 @@ class PostController extends Controller
     {
         //
         /*$posts = Post::orderBy('created_at', 'desc')->paginate(6);*/
-        $posts = Post::orderBy('created_at', 'desc')->withCount('comments')->paginate(6);
+        $posts = Post::orderBy('created_at', 'desc')->withCount(['comments', 'zans'])->paginate(6);
         return view('post.index', compact('posts'));
     }
 
@@ -53,14 +53,9 @@ class PostController extends Controller
             'content' => 'required|min:20'
         ]);
         $user_id = Auth::id();
-        /*$param = array_merge(request(['title', 'content']), compact('user_id'));
-        Post::create($param);*/
-        $post = new Post();
-        $post->title = request('title');
-        $post->content = request('content');
-        $post->user_id = $user_id;
-        $post->save();
-        return redirect('/posts');
+        $param = array_merge(request(['title', 'content']), compact('user_id'));
+        Post::create($param);
+        return route('posts.index');
     }
 
     /**
@@ -71,8 +66,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        //提前加载，不让页面查询数据库
         $post->load('comments');
+
         return view('post.show', compact('post'));
     }
 
@@ -86,6 +82,7 @@ class PostController extends Controller
     {
         //
         $this->authorize('update', $post);
+
         return view('post.edit', compact('post'));
     }
 
@@ -108,7 +105,7 @@ class PostController extends Controller
                 'content' => $request->input('content')
             ]
         );
-        return redirect()->route('posts.show', $post);
+        return route('posts.show', $post);
 
     }
 
@@ -122,22 +119,20 @@ class PostController extends Controller
     {
         //
         $this->authorize('delete', $post);
+        $post->comments()->delete();
+        $post->zans()->delete();
         $post->delete();
-        return redirect('posts');
+        return route('posts.show', $post);
     }
 
     /*
      * 图片上传方法
      * */
 
-    public function imageUpload(Request $request)
-    {
-        dd($request->all());
-    }
 
     public function comment()
     {
-        $this->validate(\request(), [
+        $this->validate(request(), [
             'content' => 'required|min:3|max:100'
         ]);
 
@@ -154,6 +149,10 @@ class PostController extends Controller
     {
         $user_id = Auth::id();
         $post_id = $post->id;
+        /*  $zan = new Zan();
+          $zan->user_id = $user_id;
+          $zan->post_id = $post_id;
+          $zan->save();*/
         Zan::create(compact('user_id', 'post_id'));
         return back();
     }

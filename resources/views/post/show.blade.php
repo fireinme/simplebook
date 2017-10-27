@@ -13,14 +13,10 @@
                     <a style="margin: auto" href="{{ route('posts.delete',$post),method_field('delete') }}"> <span
                                 class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a>
                 @endcan
-
-
             </div>
-
             <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}}<a
                         href="#">{{$post->user->name}}</a>
             </p>
-
             {!!$post->content  !!}
             <p><br></p>
             <div>
@@ -31,7 +27,6 @@
                     <a href="{{route('zan',$post)}}" type="button"
                        class="btn btn-primary btn-lg">赞</a>
                 @endif
-
             </div>
         </div>
 
