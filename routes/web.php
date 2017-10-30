@@ -41,5 +41,13 @@ Route::get('posts/{post}/zan', 'PostController@zan')->name('zan');
 Route::get('posts/{post}/unzan', 'PostController@unZan')->name('unzan');
 //个人首页
 Route::get('user/{user}', 'UserController@index')->name('user.index');
+//个人设置页
+Route::get('user/{user}/setting', 'UserController@setView')->name('user.setting');
+
+Route::post('user/setting/store', 'UserController@setting')->name('user.settingStore');
+
+
 //关注
-Route::get('user/{user}/star', 'UserController@star')->name('user.star');
+Route::post('user/{user}/star', 'UserController@star')->name('user.star');
+//取消关注
+Route::post('user/{user}/unstar', 'UserController@star')->name('user.unstar');

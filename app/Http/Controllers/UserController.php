@@ -11,10 +11,21 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(User $user)
     {
+        $user = User::withCount(['posts', 'fans', 'stars'])->find($user->id);
+
         $fans = $user->fans;
+        $fans = User::whereIn('id', $fans->pluck('id'))->withCount(['posts', 'fans', 'stars'])->get();
+
         $stars = $user->stars;
+        $stars = User::whereIn('id', $stars->pluck('id'))->withCount(['posts', 'fans', 'stars'])->get();
+
         $posts = $user->posts;
         return view('user.user', compact('fans', 'stars', 'posts', 'user'));
     }
@@ -25,7 +36,10 @@ class UserController extends Controller
         $fan_id = Auth::id();
         $star_id = $star->id;
         Fan::create(compact('fan_id', 'star_id'));
-        return back();
+        return [
+            'error' => 0,
+            'msg' => ''
+        ];
     }
 
     //取消关注
@@ -33,7 +47,23 @@ class UserController extends Controller
     {
         $star = Auth::user()->star($star->id);
         $star->delete();
-        return back();
+        return [
+            'error' => 0,
+            'msg' => ''
+        ];
 
+    }
+
+    //个人设置页
+    public function setView(User $user)
+    {
+        return view('user.setting', compact('user'));
+    }
+
+    //保存个人设置
+    public function setting()
+    {
+
+        return redirect()->route('posts.index');
     }
 }
