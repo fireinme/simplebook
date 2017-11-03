@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use App\topic;
 use App\Zan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class PostController extends Controller
         //
         /*$posts = Post::orderBy('created_at', 'desc')->paginate(6);*/
         $posts = Post::orderBy('created_at', 'desc')->withCount(['comments', 'zans'])->paginate(6);
-        return view('post.index', compact('posts'));
+        return view('post.index', compact('posts', 'topics'));
     }
 
     /**

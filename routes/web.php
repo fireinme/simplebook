@@ -51,3 +51,8 @@ Route::post('user/setting/store', 'UserController@setting')->name('user.settingS
 Route::post('user/{user}/star', 'UserController@star')->name('user.star');
 //取消关注
 Route::post('user/{user}/unstar', 'UserController@star')->name('user.unstar');
+//专题列表
+Route::get('topic/{topic}', 'TopicController@index')->name('topic');
+//提交文章到专题
+Route::post('topic/{topic}/submit', 'TopicController@submit')->name('topic.submit');
+

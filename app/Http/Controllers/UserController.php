@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Fan;
 use App\Post;
 use App\User;
+use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,7 @@ class UserController extends Controller
         $stars = User::whereIn('id', $stars->pluck('id'))->withCount(['posts', 'fans', 'stars'])->get();
 
         $posts = $user->posts;
+
         return view('user.user', compact('fans', 'stars', 'posts', 'user'));
     }
 
@@ -57,6 +59,7 @@ class UserController extends Controller
     //个人设置页
     public function setView(User $user)
     {
+
         return view('user.setting', compact('user'));
     }
 
