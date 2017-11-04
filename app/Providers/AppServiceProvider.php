@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Topic;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
         View::composer('layouts._side', function ($view) {
             $topics = Topic::all();
             $view->with('topics', $topics);
+        });
+        View::composer('admin.layouts._head', function ($view) {
+            $user = Auth::guard('admin')->user();
+            $view->with('user', $user);
         });
 
     }

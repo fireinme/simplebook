@@ -56,3 +56,6 @@ Route::get('topic/{topic}', 'TopicController@index')->name('topic');
 //提交文章到专题
 Route::post('topic/{topic}/submit', 'TopicController@submit')->name('topic.submit');
 
+//引入后台路由
+include_once 'admin.php';
+

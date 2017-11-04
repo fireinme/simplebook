@@ -13,7 +13,7 @@ class TopicController extends Controller
 {
     //进入专题页
     public function index(Topic $topic)
-    {
+    {    //获取当前专题的所以文章
         $posts = $topic->posts;
         $posts = Post::whereIn('id', $posts->pluck('id'))->withCount(['comments', 'zans'])->get();
         //$topic = Topic::withCount(['posts'])->find($topic->id)->get();
@@ -24,13 +24,14 @@ class TopicController extends Controller
 
     public function submit(Topic $topic)
     {
-        $this->validate(\request(), [
+        $this->validate(request(), [
             'post_ids' => 'required|array'
         ]);
         $topic_id = $topic->id;
-        $post_ids = \request('post_ids');
+        $post_ids = request('post_ids');
 
         foreach ($post_ids as $post_id) {
+            //插入一条数据
             PostsTopics::create(compact('post_id', 'topic_id'));
         }
         return back();
