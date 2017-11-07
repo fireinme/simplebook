@@ -24,10 +24,7 @@ class AppServiceProvider extends ServiceProvider
             $topics = Topic::all();
             $view->with('topics', $topics);
         });
-        View::composer('admin.layouts._head', function ($view) {
-            $user = Auth::guard('admin')->user();
-            $view->with('user', $user);
-        });
+
 
     }
 

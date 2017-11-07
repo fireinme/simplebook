@@ -10,26 +10,29 @@ class Post extends Model
     //
     protected $fillable = ['title', 'content', 'user_id'];
 
+    //与用户的关联关系
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id', 'id')->withDefault(['name' => 'dennis']);
     }
 
+    //与评论的关联关系
     public function comments()
     {
         return $this->hasMany('App\Comment');
     }
 
+    //与用户的赞的关联关系
     public function zan($user_id)
     {
         return $this->hasOne('App\Zan')->where('user_id', $user_id);
     }
-
+   //与用户赞的关系
     public function zans()
     {
         return $this->hasOne('App\Zan');
     }
-
+   // 与文章专题的关系
     public function topics()
     {
         return $this->belongsToMany('App\Topic', 'posts_topics');
