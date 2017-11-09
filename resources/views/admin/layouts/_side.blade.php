@@ -12,7 +12,7 @@
                 <ul class="treeview-menu">
                     <li><a href="/admin/permissions"><i class="fa fa-circle-o"></i> 权限管理</a></li>
                     <li><a href="{{route('admin.user')}}"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-                    <li><a href="/admin/roles"><i class="fa fa-circle-o"></i> 角色管理</a></li>
+                    <li><a href="{{route('role.index')}}"><i class="fa fa-circle-o"></i> 角色管理</a></li>
                 </ul>
             </li>
             <li class="active treeview">

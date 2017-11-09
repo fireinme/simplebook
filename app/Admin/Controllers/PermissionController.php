@@ -9,16 +9,17 @@
 namespace App\admin\Controllers;
 
 
+use App\AdminPermission;
 use App\AdminRole;
 use App\AdminUser;
 use Illuminate\Support\Facades\Auth;
 
-class AdminUserController extends Controller
+class PermissionController extends Controller
 {
-    public function index()
+    public function index(AdminRole $role)
     {
-        $admins = AdminUser::orderBy('id', 'asc')->get();
-        return view('admin.user.index', compact('admins'));
+        $pers = AdminPermission::all();
+        return view('admin.permission.index', compact('pers'));
     }
 
     public function store()
@@ -29,11 +30,7 @@ class AdminUserController extends Controller
             'password' => 'required|min:3|max:20',
         ]);
 
-        $password = bcrypt(request('password'));
-        $name = request('name');
-        //插入数据
-        AdminUser::create(compact('name', 'password'));
-        return redirect()->route('admin.user');
+
     }
 
     public function role()

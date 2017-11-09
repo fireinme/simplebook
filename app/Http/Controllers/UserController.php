@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AdminUser;
 use App\Fan;
 use App\Post;
 use App\User;
@@ -11,11 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     public function index(User $user)
     {
@@ -69,4 +66,17 @@ class UserController extends Controller
 
         return redirect()->route('posts.index');
     }
+
+    public function role(AdminUser $user)
+    {
+        return view('admin.user.role', compact('user'));
+
+    }
+    //保存角色
+    public function storeRole()
+    {
+
+    }
+
+
 }
