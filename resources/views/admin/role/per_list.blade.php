@@ -11,43 +11,25 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="/admin/roles/1/permission" method="POST">
-                            <input type="hidden" name="_token" value="RPPMc0lhvtynKELDZljXlz9UZI9uNc55ip1P8GCM">
-                            <div class="form-group">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               checked
-                                               value="1">
-                                        system
-                                    </label>
+                        <form action="{{route('role.per.store',$role)}}" method="POST">
+                            {{csrf_field()}}
+                            @foreach($pers as $per)
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="permissions[]"
+                                                   @if($MyPers->contains($per))
+                                                   checked
+                                                   @endif
+                                                   value="{{$per->id}}">
+                                            {{$per->name}}
+                                        </label>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               checked
-                                               value="2">
-                                        post
-                                    </label>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">提交</button>
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               value="3">
-                                        topic
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               value="4">
-                                        notice
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">提交</button>
-                            </div>
                         </form>
 
 

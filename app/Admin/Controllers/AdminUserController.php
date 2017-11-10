@@ -36,19 +36,29 @@ class AdminUserController extends Controller
         return redirect()->route('admin.user');
     }
 
-    public function role()
+    public function roleList(AdminUser $user)
     {
         $roles = AdminRole::all();
-        return view('admin.user.role', compact('roles'));
+        $myRoles = $user->roles;
+        return view('admin.user.role', compact('roles', 'myRoles', 'user'));
     }
 
-    public function storeRole()
+    public function storeRoleStore(AdminUser $user)
     {
         $this->validate(request(), [
-            'role[]' => 'required|array'
+            'roles' => 'required|array'
         ]);
-        $user = Auth::guard('admin')->user();
-        $user->addRole(request('role'));
-        return back();
+        //需要修改的用户
+        $role_ids = request('roles');
+        $roles = AdminRole::findMany($role_ids);
+        //修改之前的用户的角色
+        $myRoles = $user->roles;
+        //比较差异，进行增加、删除
+        $addRoles = $roles->diff($myRoles)->pluck('id');
+        $delRoles = $myRoles->diff($roles)->pluck('id');
+        $user->addRole($addRoles);
+        $user->delRole($delRoles);
+
+        return redirect()->route('admin.user');
     }
 }

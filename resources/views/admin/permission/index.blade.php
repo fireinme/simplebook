@@ -9,49 +9,31 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">权限列表</h3>
                     </div>
+                    <a type="button" class="btn " href="{{route('per.create')}}">增加权限</a>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="/admin/roles/1/permission" method="POST">
-                            {{csrf_field()}}
-                            <div class="form-group">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               checked
-                                               value="1">
-                                        system
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               checked
-                                               value="2">
-                                        post
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               value="3">
-                                        topic
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]"
-                                               value="4">
-                                        notice
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">提交</button>
-                            </div>
-                        </form>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>权限名称</th>
+                                <th>描述</th>
+                                <th>操作</th>
+                            </tr>
+                            @foreach($pers as $per)
+                                <tr>
+                                    <td>{{$per->id}}</td>
+                                    <td>{{$per->name}}</td>
+                                    <td>{{$per->description}}</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            @endforeach
 
-
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div>

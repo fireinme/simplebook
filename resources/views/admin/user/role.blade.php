@@ -11,7 +11,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <form action="{{route('user.role')}}"
+                        <form action="{{route('user.role.store',$user)}}"
                               method="POST">
                             {{csrf_field()}}
                             @foreach($roles as $role)
@@ -19,7 +19,9 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="roles[]"
+                                                   @if($myRoles->contains($role))
                                                    checked
+                                                   @endif
                                                    value="{{$role->id}}">
 
                                             {{$role->name}}
@@ -31,6 +33,7 @@
                                 <button type="submit" class="btn btn-primary">提交</button>
                             </div>
                         </form>
+                        @include('layouts.error')
 
 
                     </div>

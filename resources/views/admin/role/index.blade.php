@@ -9,7 +9,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">角色列表</h3>
                     </div>
-                    <a type="button" class="btn " href="http://127.0.0.1:8000/admin/roles/create">增加角色</a>
+                    <a type="button" class="btn " href="{{route('role.create')}}">增加角色</a>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -26,7 +26,7 @@
                                     <td>{{$role->name}}</td>
                                     <td>{{$role->description}}</td>
                                     <td>
-                                        <a type="button" class="btn" href="{{route('role.per',$role)}}">权限管理</a>
+                                        <a type="button" class="btn" href="{{route('role.per.page',$role)}}">权限管理</a>
                                     </td>
                                 </tr>
                             @endforeach

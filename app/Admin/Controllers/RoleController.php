@@ -9,6 +9,7 @@
 namespace App\Admin\Controllers;
 
 
+use App\AdminPermission;
 use App\AdminRole;
 
 class RoleController extends Controller
@@ -32,6 +33,34 @@ class RoleController extends Controller
             'description' => 'required|min:2'
         ]);
         AdminRole::create(request(['name', 'description']));
+
+        return redirect()->route('role.index');
+
+    }
+
+    public function perList(AdminRole $role)
+    {
+        $pers = AdminPermission::all();
+        $MyPers = $role->permissions;
+        return view('admin.role.per_list', compact('role', 'MyPers', 'pers'));
+
+    }
+
+    public function perListStore(AdminRole $role)
+    {
+        $this->validate(request(), [
+            'permissions' => 'required|array'
+        ]);
+        //修改后的角色权限
+        $per_ids = request('permissions');
+        $pers = AdminPermission::findMany($per_ids);
+        //修改之前的角色权限
+        $MyPers = $role->permissions;
+        //新增的权限
+        $addPers = $pers->diff($MyPers)->pluck('id');
+        $delPers = $MyPers->diff($pers)->pluck('id');
+        $role->addPermission($addPers);
+        $role->delPermission($delPers);
 
         return redirect()->route('role.index');
 

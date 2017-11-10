@@ -12,7 +12,7 @@ class AdminRole extends Model
     //获取该角色下所有权限
     public function permissions()
     {
-        return $this->belongsToMany('App\AdminPermissions', 'admin_permission_role',
+        return $this->belongsToMany('App\AdminPermission', 'admin_permission_role',
             'Role_id', 'permission_id');
     }
 

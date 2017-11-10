@@ -1,51 +1,37 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dennis
- * Date: 2017/11/4
- * Time: 14:39
- */
+
 
 namespace App\admin\Controllers;
 
 
 use App\AdminPermission;
 use App\AdminRole;
-use App\AdminUser;
-use Illuminate\Support\Facades\Auth;
 
 class PermissionController extends Controller
 {
-    public function index(AdminRole $role)
+    public function index()
     {
         $pers = AdminPermission::all();
         return view('admin.permission.index', compact('pers'));
     }
 
+    public function create()
+    {
+        return view('admin.permission.create');
+    }
+
     public function store()
     {
-        //验证
         $this->validate(request(), [
-            'name' => 'required|min:1|max:10|unique:admin_users',
-            'password' => 'required|min:3|max:20',
+            'name' => 'required',
+            'description' => 'required'
         ]);
+        AdminPermission::create(request(['name', 'description']));
 
-
+        return redirect()->route('per.index');
     }
 
-    public function role()
-    {
-        $roles = AdminRole::all();
-        return view('admin.user.role', compact('roles'));
-    }
 
-    public function storeRole()
-    {
-        $this->validate(request(), [
-            'role[]' => 'required|array'
-        ]);
-        $user = Auth::guard('admin')->user();
-        $user->addRole(request('role'));
-        return back();
-    }
+
+
 }

@@ -27,9 +27,9 @@ class AdminUser extends Authenticatable
         return $this->roles()->detach($role_id);
     }
 
-    public function hasRole($role)
+    public function hasRole($roles)
     {
-        return $this->roles->contains($role);
+        return !!$roles->intersect($this->roles)->count();
     }
 
     public function hasPermission($permission)
