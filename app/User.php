@@ -50,4 +50,14 @@ class User extends Authenticatable
             ->where('star_id', $star_id)->count();
 
     }
+
+    public function notices()
+    {
+        return $this->belongsToMany('App\Notice', 'users_notices', 'user_id', 'notice_id');
+    }
+
+    public function sendNotice(Notice $notice)
+    {
+        return $this->notices()->attach($notice->id);
+    }
 }

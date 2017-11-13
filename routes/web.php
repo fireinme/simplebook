@@ -30,6 +30,9 @@ Route::get('user/me/setting', function () {
 });
 //个人设置活动
 Route::post('user/{user}', 'UserController@settingStore');
+//个人通知
+Route::get('user/notice', 'UserController@notice')->name('user.notice');
+
 
 Route::resource('posts', 'PostController');
 Route::get('posts/{post}/delete', 'PostController@delete')->name('posts.delete');

@@ -63,8 +63,13 @@ Route::prefix('admin')->group(function () {
             Route::get('/posts', '\App\admin\Controllers\PostController@index')->name('admin.posts');
             //审核文章
             Route::post('/posts/{post}/status', '\App\admin\Controllers\PostController@status');
-
+            //专题管理
+            Route::resource('topic', '\App\admin\Controllers\TopicController', ['only' => ['index', 'create', 'store'
+                , 'destroy']]);
         });
+        //通知
+        Route::resource('notice', '\App\admin\Controllers\NoticeController', ['only' => ['index', 'create', 'store'
+        ]]);
 
 
     });

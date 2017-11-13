@@ -25,12 +25,12 @@
                     </a>
                 </li>
                 <li class="active treeview">
-                    <a href="/admin/topics">
+                    <a href="{{route('topic.index')}}">
                         <i class="fa fa-dashboard"></i> <span>专题管理</span>
                     </a>
                 </li>
                 <li class="active treeview">
-                    <a href="/admin/notices">
+                    <a href="{{route('notice.index')}}">
                         <i class="fa fa-dashboard"></i> <span>通知管理</span>
                     </a>
                 </li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AdminUser;
 use App\Fan;
+use App\Notice;
 use App\Post;
 use App\User;
 use App\Topic;
@@ -72,11 +73,13 @@ class UserController extends Controller
         return view('admin.user.role', compact('user'));
 
     }
-    //保存角色
-    public function storeRole()
+
+    public function notice()
     {
-
+        $user = Auth::user();
+        $notices = $user->notices;
+        //dd($notices);
+        return view('user.notice', compact('notices'));
     }
-
 
 }
