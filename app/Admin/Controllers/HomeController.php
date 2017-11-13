@@ -15,6 +15,7 @@ class HomeController extends Controller
 {
 
 
+    //展示首页
     public function index()
     {
         return view('admin.home.index');

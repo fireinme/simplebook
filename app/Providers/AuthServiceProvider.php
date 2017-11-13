@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $pers = AdminPermission::all();
+        //为每个权限生成一个Gate
         foreach ($pers as $per) {
 
             Gate::define($per->name, function ($user) use ($per) {
